@@ -1,0 +1,341 @@
+{% extends 'index/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="content">
+        <div class="intro">
+            <div class="container">
+                <div class="intro-content">
+                    <div class="intro-title">
+                        <div class="intro-title__top">Digital - агенство полного цикла</div>
+                        <div class="intro-title__bottom">Разработка веб-сайтов и их продвижение</div>
+                    </div>
+                    <div class="intro-txt">Мы не просто создаем сайты, мы решаем бизнес-задачи! Покупая посадочную страницу у нас, Вы покупаете полноценную систему по привлечению клиентов.</div>
+                    <div class="intro-group flex"> <a class="btn intro-btn smooth" href="#request">Оставить заявку</a>
+                        <div class="intro-price">
+                            <!--
+                            <div class="intro-price__txt">Стоимость от </div>
+                            <div class="intro-price__value">20 000 руб.</div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stages section" id="stages">
+            <div class="container">
+                <div class="stages-head section-head">
+                    <div class="section-suptitle">Ознакомтесь с тем, как мы работаем</div>
+                    <div class="section-title">Этапы создания проекта</div>
+                </div>
+                <div class="stages-content flex">
+                    <div class="stages-content__left">
+                        <div class="stages-slider-wrapper">
+                            <div class="stages-slider__btn-wrapper stages-slider__btn-wrapper--prev centered">
+                                <button class="swiper-button stages-slider__btn stages-slider__prev" type="button">
+                                    <svg class="svg-sprite-icon icon-prev">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#prev"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stages-slider__btn-wrapper stages-slider__btn-wrapper--next centered">
+                                <button class="swiper-button stages-slider__btn stages-slider__next" type="button">
+                                    <svg class="svg-sprite-icon icon-next">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#next"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="stages-slider swiper-container">
+                                <div class="swiper-wrapper">
+                                    {% for serv in work %}
+                                        <div class="swiper-slide">
+                                            <div class="stages-slider__img">
+                                                <picture>
+                                                    <source srcset="{{ serv.image.url }}" type="image/webp"><img src="{{ row }}" width="650" height="722" alt="img">
+                                                </picture>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stages-content__right">
+                        <div class="stages-list">
+                            <div class="stages-list__line"></div>
+                            {% for row in work %}
+                                {% if forloop.first %}
+                                    <div class="stages-list__item">
+                                        <div class="stages-item stages-item--active">
+                                            <div class="stages-item__circle centered" id="first"><span></span></div>
+                                            <div class="stages-item__inner flex">
+                                                <div class="stages-item__left">
+                                                    <div class="stages-item__number">{{ row.rows }}</div>
+                                                </div>
+                                                <div class="stages-item__right">
+                                                    <div class="stages-item__title">{{ row.title }}</div>
+                                                    <div class="stages-item__txt">{{ row.content }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="stages-list__item">
+                                        <div class="stages-item">
+                                            <div class="stages-item__circle centered"><span></span></div>
+                                            <div class="stages-item__inner flex">
+                                                <div class="stages-item__left">
+                                                    <div class="stages-item__number">{{ row.rows }}</div>
+                                                </div>
+                                                <div class="stages-item__right">
+                                                    <div class="stages-item__title">{{ row.title }}</div>
+                                                    <div class="stages-item__txt">{{ row.content }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cases section" id="cases">
+            <div class="container">
+                <div class="section-head">
+                    <div class="section-suptitle">Что мы выполняли ранее</div>
+                    <div class="section-title">Примеры работ</div>
+                </div>
+                <div class="cases-filter flex">
+                    <button class="cases-btn cases-btn--selected" type="button">Все кейсы</button>
+                    <button class="cases-btn" type="button">Комплексные кейсы</button>
+                    <button class="cases-btn" type="button">Контекстная реклама</button>
+                    <button class="cases-btn" type="button">SMM</button>
+                    <button class="cases-btn" type="button">SEO</button>
+                    <button class="cases-btn" type="button">E-mail маркетинг</button>
+                </div>
+                <div class="cases-list flex">
+                    {% for row in case %}
+                    <div class="cases-list__item">
+                        <div class="cases-item">
+                            <div class="cases-item__img">
+                                <picture>
+                                    <source srcset="{{ row.image.url }}" type="image/webp"><img src="{{ row.image.url }}" width="480" height="326" alt="img">
+                                </picture>
+                            </div>
+                            <div class="cases-item__content"><a class="cases-item__btn centered" href="{% url 'index:case' row.id %}">
+                                <svg class="svg-sprite-icon icon-right">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#right"></use>
+                                </svg></a>
+                                <div class="cases-item__info">
+                                    <div class="cases-item__tags">{{ row.Hash }}</div>
+                                    <div class="cases-item__title">{{ row.title}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!--
+                <div class="cases-foot"> <a class="cases-link" href="#">Посмотреть все работы
+                    <svg class="svg-sprite-icon icon-right-2">
+                        <use xlink:href="images/svg/symbol/sprite.svg'#right-2"></use>
+                    </svg></a></div>
+                -->
+            </div>
+        </div>
+        <div class="reviews section" id="reviews">
+            <div class="reviews__inner">
+                <div class="container">
+                    <div class="reviews-head section-head section-head--white">
+                        <div class="section-suptitle">Что о нас говорят наши клиенты</div>
+                        <div class="section-title">Наши отзывы</div>
+                    </div>
+                    <div class="reviews-slider-wrapper swiper-slider">
+                        <button class="swiper-button swiper-button--prev swiper-button--centered reviews-slider__prev" type="button">
+                            <svg class="svg-sprite-icon icon-prev">
+                                <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#prev"></use>
+                            </svg>
+                        </button>
+                        <button class="swiper-button swiper-button--next swiper-button--centered reviews-slider__next" type="button">
+                            <svg class="svg-sprite-icon icon-next">
+                                <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#next"></use>
+                            </svg>
+                        </button>
+                        <div class="reviews-slider swiper-container">
+                            <div class="swiper-wrapper">
+                                {% for row in review %}
+                                <div class="swiper-slide">
+                                    <div class="reviews-item">
+                                        <div class="reviews-item__photo">
+                                            <picture>
+                                                <source srcset="{{ row.image.url }}" type="image/webp"><img class="rounded" src="{{ row.image.url }}" width="100" height="100" alt="img">
+                                            </picture>
+                                        </div>
+                                        <div class="reviews-item__content">
+                                            <div class="reviews-item__txt">{{ row.content }}</div>
+                                            <div class="reviews-item__author">{{ row.name }}, {{ row.city }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination swiper-pagination--white reviews-slider__pagination"></div>
+                </div>
+            </div>
+        </div>
+        <div class="faq section" id="faq">
+            <div class="container">
+                <div class="faq-head section-head">
+                    <div class="section-suptitle">Мы постараемся ответить на</div>
+                    <div class="section-title">Часто задаваемые вопросы</div>
+                </div>
+                <div class="faq-slider-wrapper swiper-slider">
+                    <button class="swiper-button swiper-button--prev swiper-button--centered faq-slider__prev" type="button">
+                        <svg class="svg-sprite-icon icon-prev">
+                            <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#prev"></use>
+                        </svg>
+                    </button>
+                    <button class="swiper-button swiper-button--next swiper-button--centered faq-slider__next" type="button">
+                        <svg class="svg-sprite-icon icon-next">
+                            <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#next"></use>
+                        </svg>
+                    </button>
+                    <div class="faq-slider swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for row in faq %}
+                            <div class="swiper-slide">
+                                <div class="faq-item">
+                                    <div class="faq-item__inner rounded">
+                                        <div class="faq-item__line"> </div>
+                                        <div class="faq-item__title">{{ row.title }}</div>
+                                        <div class="faq-item__txt">{{ row.content }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination faq-slider__pagination"></div>
+            </div>
+        </div>
+        <div class="request section" id="request">
+            <div class="container">
+                <div class="request-content flex">
+                    <div class="request-content__left">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <!--
+                          <input class="hidden-input" type="hidden" name="title" value="Заявка на разработку">
+                          <input class="hidden-input" type="hidden" name="admin_email" value="epi.lor@ya.ru">
+                          <input class="hidden-input" type="hidden" name="project_name" value="avanture">
+                          <input class="hidden-input" type="hidden" name="form_subject" value="Заявка на разработку">
+                          -->
+                            <input id="minPrice" type="hidden" name="minPrice" value="100000">
+                            <input id="maxPrice" type="hidden" name="maxPrice" value="10000000">
+                            <div class="request-form__group">
+                                <div class="request-form__title request-form__title--mb-10"><img src="{% static 'images/general/request-icon-1.svg' %}" alt=""><span>Заявка на разработку</span></div>
+                                <div class="request-form__txt">Готовы сделать заказ в нашей студии? Оформите заявку через форму обратной связи.</div>
+                            </div>
+                            <div class="request-form__group">
+                                <div class="request-form__title"><img src="{% static 'images/general/request-icon-2.svg' %}" alt=""><span>Ценовой диапозон</span></div>
+                                <div class="request-form__range">
+                                    <div id="filterSlider"></div>
+                                    <div class="request-form__range-values">
+                                        <div class="request-form__range-from"><span>100 000</span>р</div>
+                                        <div class="request-form__range-to"> <span>450 000</span>р</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="request-form__group">
+                                <div class="request-form__title"><img src="{% static 'images/general/request-icon-3.svg' %}" alt=""><span>Услуги</span></div>
+                                <div class="request-form__row flex">
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Мобильное приложение"><span>Мобильное приложение</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Компьютерная игра"><span>Компьютерная игра</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Браузерная игра"><span>Браузерная игра</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="VR или AR проект"><span>VR или AR проект</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Мобильная игра"><span>Мобильная игра</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Веб-сайт / приложение"><span>Веб-сайт / приложение</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Продвижение и реклама"><span>Продвижение и реклама</span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__radio">
+                                            <input type="radio" name="service" value="Айдентика"><span>Айдентика</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="request-form__group">
+                                <div class="request-form__row flex">
+                                    <div class="request-form__col">
+                                        <input class="request-form__input request-form__field" type="text" name="name" required placeholder="Имя">
+                                    </div>
+                                    <div class="request-form__col">
+                                        <input class="request-form__input request-form__field" type="email" name="email" placeholder="E-mail">
+                                    </div>
+                                    <div class="request-form__col">
+                                        <input class="request-form__input request-form__field" type="text" name="phone" data-phone required placeholder="Телефон">
+                                    </div>
+                                    <div class="request-form__col">
+                                        <label class="request-form__file">
+                                            <input type="file" name="file"><span class="request-form__file-btn rounded centered"><span class="request-form__file-visible">
+                              <svg class="svg-sprite-icon icon-direct-inbox">
+                                <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#direct-inbox"></use>
+                              </svg><span>Загрузить файл</span></span><span class="request-form__file-hidden"></span></span>
+                                        </label>
+                                    </div>
+                                    <div class="request-form__col request-form__col--100">
+                                        <textarea class="request-form__textarea request-form__field" placeholder="Сообщение" name="message"></textarea>
+                                    </div>
+                                    <div class="request-form__col request-form__col--100">
+                                        <div class="request-form__foot">
+                                            <button class="btn request-form__btn" type="submit">Отправить заявку</button>
+                                            <div class="request-form__consent">Нажимая на кнопку «Отправить», Вы даете согласие на обработку своих персональных данных</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="request-content__right">
+                        <div class="request-img">
+                            <picture>
+                                <source srcset="{% static 'images/general/request-img.webp' %}" type="image/webp"><img src="{% static 'images/general/request-img.jpg' %}" width="770" height="998" alt="img">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

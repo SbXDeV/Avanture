@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru-RU" xmlns:xlink="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE = edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link href="{% static 'images/general/favicon.ico' %}" rel="shortcut icon" type="image/svg">
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="container">
+            <div class="header__content flex">
+                <div class="header__logo"> <a class="logo" href="#">
+                    <picture>
+                        <source srcset="{% static 'images/general/logo.webp' %}" type="image/webp"><img src="{% static 'images/general/logo.png' %}" width="" height="" alt="img">
+                    </picture></a></div>
+                <div class="header__menu">
+                    <nav class="nav">
+                        <ul class="menu flex">
+                            {% for row in menu %}
+                                <li class="menu__item"> <a class="menu__link smooth" href="{{ row.get_menu_context_display }}">{{ row.menu }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header__contacts"><a class="header-phone" href="tel:+79675554952"><span class="header-phone__icon">
+                  <svg class="svg-sprite-icon icon-phone">
+                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#phone"></use>
+                      {% for row in phone %}
+                          </svg></span><span class="header-phone__txt">{{ row.PhoneOne }} <span>{{ row.PhoneTwo }}</span></span></a></div>
+                      {% endfor %}
+                <div class="header__m-menu"> <a class="open-menu" href="#" aria-label="mobile-menu"><span> </span></a></div>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="container">
+                <div class="footer__content flex">
+                    <div class="footer__col">
+                        <ul class="footer-menu footer-menu--2-col">
+                            {% for row in menu %}
+                                <li class="footer-menu__item"> <a class="footer-menu__link" href="{{ row.get_menu_context_display }}">
+                                    <svg class="svg-sprite-icon icon-right-3">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#right-3"></use>
+                                    </svg><span>{{ row.menu }}</span></a></li>
+                            {% endfor %}
+                            {% for row in policy %}
+                                <li class="footer-menu__item"> <a class="footer-menu__link" href="{{ row.file.url }}">
+                                    <svg class="svg-sprite-icon icon-right-3">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#right-3"></use>
+                                    </svg><span>Политика конфиденциальности</span></a></li>
+                            {% endfor %}
+                            {% for row in user %}
+                            <li class="footer-menu__item"> <a class="footer-menu__link" href="{{ row.file.url }}">
+                                <svg class="svg-sprite-icon icon-right-3">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#right-3"></use>
+                                </svg><span>Пользовательское соглашение</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="footer__col">
+                        <ul class="footer-menu">
+                            <li class="footer-menu__item"> <a class="footer-menu__link" href="#">
+                                <svg class="svg-sprite-icon icon-direct-inbox">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#direct-inbox"></use>
+                                </svg><span>Бриф</span></a></li>
+                            <li class="footer-menu__item"> <a class="footer-menu__link" href="#">
+                                <svg class="svg-sprite-icon icon-direct-inbox">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#direct-inbox"></use>
+                                </svg><span>Пример договора</span></a></li>
+                            <li class="footer-menu__item"> <a class="footer-menu__link" href="#">
+                                <svg class="svg-sprite-icon icon-direct-inbox">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#direct-inbox"></use>
+                                </svg><span>Реквизиты</span></a></li>
+                            <li class="footer-menu__item"> <a class="footer-menu__link" href="#">
+                                <svg class="svg-sprite-icon icon-direct-inbox">
+                                    <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#direct-inbox"></use>
+                                </svg><span>Презентация</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="container">
+                <div class="footer-copyright">© Avanture, 2020-2022 Все права запрещены | Политика конфиденциальности</div>
+            </div>
+        </div>
+    </footer>
+    <div class="modal fade" id="thanksModal" tabindex="-1" aria-labelledby="thanksModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button class="modal-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="svg-sprite-icon icon-close">
+                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#close"></use>
+                    </svg>
+                </button>
+                <div class="modal-content__img">
+                    <svg width="33" height="24" viewBox="0 0 33 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32.3411 3.70139L12.4032 24L0.628507 12.0033C0.226081 11.5932 -4.24025e-09 11.0371 0 10.4573C4.24025e-09 9.87743 0.226081 9.32133 0.628507 8.91131C1.03093 8.5013 1.57674 8.27095 2.14586 8.27095C2.71498 8.27095 3.26078 8.5013 3.66321 8.91131L12.4335 17.847L29.3368 0.640362C29.536 0.437342 29.7726 0.276299 30.033 0.166425C30.2933 0.0565514 30.5723 5.65969e-09 30.8541 0C31.1359 -5.65969e-09 31.415 0.0565515 31.6753 0.166425C31.9357 0.276299 32.1722 0.437342 32.3715 0.640362C32.5707 0.843382 32.7288 1.0844 32.8367 1.34966C32.9445 1.61492 33 1.89922 33 2.18633C33 2.47345 32.9445 2.75775 32.8367 3.02301C32.7288 3.28827 32.5707 3.52929 32.3715 3.73231L32.3411 3.70139Z" fill="#FFD800"></path>
+                    </svg>
+
+                </div>
+                <div class="modal-content__title">Спасибо!</div>
+                <div class="modal-content__txt">Заявка отправлена и вскоре наш специалист свяжется с Вами, чтоб обговорить все оставшиеся задачи перед началом работы </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

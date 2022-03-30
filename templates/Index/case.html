@@ -1,0 +1,208 @@
+{% extends 'Index/layout.html' %}
+{% load static %}
+
+{% block content %}
+    {% for row in case %}
+        <div class="content">
+            <div class="breadcrumbs">
+                <div class="container">
+                    <ul class="breadcrumbs-list flex">
+                        <li class="breadcrumbs-list__item"> <a class="breadcrumbs-list__link" href="{% url 'index:index' %}">Главная</a></li>
+                        <li class="breadcrumbs-list__item"> <a class="breadcrumbs-list__link" href="{% url 'index:index' %}">Кейсы</a></li>
+                        <li class="breadcrumbs-list__item">Кейс №{{ row.id }} - {{ row.title }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="casePage">
+                <div class="container">
+                    <div class="casePage-head section-head">
+                        <div class="section-suptitle">Кейс №{{ row.id }}</div>
+                        <h1 class="section-title">{{ row.title }}</h1>
+                    </div>
+                    <div class="casePage-img">
+                        <picture>
+                            <source srcset="{{ row.image.url }}" type="image/webp"><img class="rounded" src="{{ row.image.url }}" width="" height="" alt="img">
+                        </picture>
+                    </div>
+                    <div class="casePage-main">
+                        <div class="casePage-main__left">
+                            <div class="casePage-features rounded">
+                                <div class="casePage-features__inner rounded">
+                                    <div class="casePage-features__title">Особенности проекта</div>
+                                    <div class="casePage-features__list">
+                                        {{ row.content_left|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="casePage-main__right">
+                            <div class="casePage-desc-wrapper rounded">
+                                <div class="casePage-desc">
+                                    <div class="casePage-desc__title">Задачи</div>
+                                    {{ row.content_center|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="casePage-solution">
+                        <div class="casePage-desc-wrapper rounded">
+                            <div class="casePage-desc">
+                                <div class="casePage-desc__title">Решения</div>
+                                {{ row.content_footer|safe }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="casePage-result rounded">
+                        <div class="casePage-result__left">
+                            <div class="casePage-desc">
+                                <div class="casePage-desc__title">Результат</div>
+                                {{ row.content_footer2|safe }}
+                            </div>
+                        </div>
+                        <div class="casePage-result__right">
+                            <div class="casePage-gallery">
+                                <div class="casePage-slider swiper-container">
+                                    <div class="swiper-wrapper">
+                                        {% for articleimage in row.articleimage_set.all %}
+                                            <div class="swiper-slide">
+                                                <div class="casePage-slider__img">
+                                                    <picture>
+                                                        <source srcset="{{ articleimage.image.url }}" type="image/webp"><img src="{{ articleimage.image.url }}" width="533" height="330" alt="img">
+                                                    </picture>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="casePage-controls">
+                                <button class="casePage-controls__btn casePage-controls__prev" type="button">
+                                    <svg class="svg-sprite-icon icon-prev-2">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#prev-2"></use>
+                                    </svg>
+                                </button>
+                                <div class="casePage-controls__pagination">
+                                    <div> 2 / 10</div>
+                                </div>
+                                <button class="casePage-controls__btn casePage-controls__next" type="button">
+                                    <svg class="svg-sprite-icon icon-next-2">
+                                        <use xlink:href="{% static 'images/svg/symbol/sprite.svg' %}#next-2"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="request section" id="request">
+                <div class="container">
+                    <div class="request-content flex">
+                        <div class="request-content__left">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input id="minPrice" type="hidden" name="minPrice" value="100000">
+                                <input id="maxPrice" type="hidden" name="maxPrice" value="10000000">
+                                <div class="request-form__group">
+                                    <div class="request-form__title request-form__title--mb-10"><img src="{% static 'images/general/request-icon-1.svg' %}" alt=""><span>Заявка на разработку</span></div>
+                                    <div class="request-form__txt">Готовы сделать заказ в нашей студии? Оформите заявку через форму обратной связи.</div>
+                                </div>
+                                <div class="request-form__group">
+                                    <div class="request-form__title"><img src="{% static 'images/general/request-icon-2.svg' %}" alt=""><span>Ценовой диапозон</span></div>
+                                    <div class="request-form__range">
+                                        <div id="filterSlider"></div>
+                                        <div class="request-form__range-values">
+                                            <div class="request-form__range-from"><span>100 000</span>р</div>
+                                            <div class="request-form__range-to"> <span>10 000 000</span>р</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="request-form__group">
+                                    <div class="request-form__title"><img src="{% static 'images/general/request-icon-3.svg' %}" alt=""><span>Услуги</span></div>
+                                    <div class="request-form__row flex">
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Мобильное приложение"><span>Мобильное приложение</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Компьютерная игра"><span>Компьютерная игра</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Браузерная игра"><span>Браузерная игра</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="VR или AR проект"><span>VR или AR проект</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Мобильная игра"><span>Мобильная игра</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Веб-сайт / приложение"><span>Веб-сайт / приложение</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Продвижение и реклама"><span>Продвижение и реклама</span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__radio">
+                                                <input type="radio" name="service" value="Айдентика"><span>Айдентика</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="request-form__group">
+                                    <div class="request-form__row flex">
+                                        <div class="request-form__col">
+                                            <input class="request-form__input request-form__field" type="text" name="name" required placeholder="Имя">
+                                        </div>
+                                        <div class="request-form__col">
+                                            <input class="request-form__input request-form__field" type="email" name="email" placeholder="E-mail">
+                                        </div>
+                                        <div class="request-form__col">
+                                            <input class="request-form__input request-form__field" type="text" name="phone" data-phone required placeholder="Телефон">
+                                        </div>
+                                        <div class="request-form__col">
+                                            <label class="request-form__file">
+                                                <input type="file" name="file"><span class="request-form__file-btn rounded centered"><span class="request-form__file-visible">
+                              <svg class="svg-sprite-icon icon-direct-inbox">
+                                <use xlink:href="static/images/svg/symbol/sprite.svg#direct-inbox"></use>
+                              </svg><span>Загрузить файл</span></span><span class="request-form__file-hidden"></span></span>
+                                            </label>
+                                        </div>
+                                        <div class="request-form__col request-form__col--100">
+                                            <textarea class="request-form__textarea request-form__field" placeholder="Сообщение" name="message"></textarea>
+                                        </div>
+                                        <div class="request-form__col request-form__col--100">
+                                            <div class="request-form__foot">
+                                                <button class="btn request-form__btn" type="submit">Отправить заявку</button>
+                                                <div class="request-form__consent">Нажимая на кнопку «Отправить», Вы даете согласие на обработку своих персональных данных</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="request-content__right">
+                            <div class="request-img">
+                                <picture>
+                                    <source srcset="{% static 'images/general/request-img.webp' %}" type="image/webp"><img src="{% static 'images/general/request-img.jpg' %}" width="770" height="998" alt="img">
+                                </picture>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
